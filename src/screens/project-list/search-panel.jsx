@@ -4,7 +4,7 @@ export const SearchPanel = ({ param, setParam, users }) => {
       <div>
         <input
           type="text"
-          value={param.name} //input发生改变 设置state
+          value={param.name} //input发生改变 设置state param
           onChange={(e) => setParam({ ...param, name: e.target.value })}
         />
         <select
@@ -18,7 +18,9 @@ export const SearchPanel = ({ param, setParam, users }) => {
         >
           <option value={""}>Person</option>
           {users.map((user) => (
-            <option value={user.id}>{user.name}</option>
+            <option key={user.id} value={user.id}>
+              {user.name}
+            </option>
           ))}
         </select>
       </div>

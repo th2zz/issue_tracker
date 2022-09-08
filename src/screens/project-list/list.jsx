@@ -1,17 +1,20 @@
-export const List = ({ list }) => {
+export const List = ({ users, list }) => {
   return (
     <table>
       <thead>
         <tr>
-          <th>name</th>
-          <th>owner</th>
+          <th>Project Name</th>
+          <th>Owner</th>
         </tr>
       </thead>
       <tbody>
         {list.map((project) => (
-          <tr>
+          <tr key={project.id}>
             <td>{project.name}</td>
-            <td>{project.personName}</td>
+            <td>
+              {users.find((user) => user.id === project.personId)?.name ||
+                "unknown"}
+            </td>
           </tr>
         ))}
       </tbody>

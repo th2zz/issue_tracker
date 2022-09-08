@@ -1,6 +1,9 @@
+import qs from "qs";
 import { useEffect, useState } from "react";
+import { cleanObject } from "../../util";
 import { List } from "./list";
 import { SearchPanel } from "./search-panel";
+const apiUrl = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
   const [param, setParam] = useState({
     name: "",
@@ -9,16 +12,25 @@ export const ProjectListScreen = () => {
   const [users, setUsers] = useState([]);
   const [list, setList] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:7777/users").then(async (response) => {
+    fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(param))}`).then(
+      async (response) => {
+        if (response.ok) {
+          setList(await response.json());
+        }
+      }
+    );
+  }, [param]);
+  useEffect(() => {
+    fetch(`${apiUrl}/users`).then(async (response) => {
       if (response.ok) {
-        setList(await response.json());
+        setUsers(await response.json());
       }
     });
   }, [param]);
   return (
     <div>
       <SearchPanel param={param} setParam={setParam} users={users} />
-      <List list={list} />
+      <List users={users} list={list} />
     </div>
   );
 };
