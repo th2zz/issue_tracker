@@ -10,7 +10,7 @@ export const ProjectListScreen = () => {
     personId: "",
   });
   const [users, setUsers] = useState([]);
-  const debouncedParam = useDebounce(param, 200);
+  const debouncedParam = useDebounce(param, 2000);
   const [list, setList] = useState([]);
   useEffect(() => {
     fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`).then(
@@ -28,9 +28,9 @@ export const ProjectListScreen = () => {
       }
     });
   });
-  return (
+  return (// debounced param只是用来fetch后台数据减少请求的 这里的param作为常规的state渲染
     <div>
-      <SearchPanel param={debouncedParam} setParam={setParam} users={users} />
+      <SearchPanel param={param} setParam={setParam} users={users} />
       <List users={users} list={list} />
     </div>
   );
