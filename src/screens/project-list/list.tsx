@@ -1,4 +1,17 @@
-export const List = ({ users, list }) => {
+import { User } from "./search-panel";
+
+interface Project {
+  id: string;
+  name: string;
+  personId: string;
+  pin: boolean;
+  organization: string;
+}
+interface ListProps {
+  list: Project[],
+  users: User[]
+}
+export const List = ({ users, list }: ListProps) => {
   return (
     <table>
       <thead>
@@ -14,7 +27,7 @@ export const List = ({ users, list }) => {
             <td>
               {users.find((user) => user.id === project.personId)?.name ||
                 "unknown"}
-            </td>
+            </td>  
           </tr>
         ))}
       </tbody>

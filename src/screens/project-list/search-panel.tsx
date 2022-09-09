@@ -1,10 +1,25 @@
-export const SearchPanel = ({ param, setParam, users }) => {
+export interface User {
+  id: string,
+  name: string,
+  email: string,
+  title: string,
+  organization: string,
+}
+interface SearchPanelProps {
+  users: User[],
+  param: {
+    name: string;
+    personId: string;
+  },
+  setParam: (param:SearchPanelProps['param']) => void;
+}
+export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
   return (
     <form>
       <div>
         <input
           type="text"
-          value={param.name} //input发生改变 设置state param
+          value={param.name} //input发生改变 设置state param; spread operator覆盖之前的只改一个字段
           onChange={(e) => setParam({ ...param, name: e.target.value })}
         />
         <select

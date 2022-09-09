@@ -1,29 +1,34 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+// typescript的好处 所有的判断类型的行为 都是在开发阶段 通过static code analysis 实现 避免runtime时发现
+// unknown is the parent type of all other types. it's a regular type in the type system.
 
-export const isEmpty = (value) => (value === 0 ? false : !value);
+// any means "turn off the type check". it's a compiler directive and kind of meta programming.
+export const isEmptyExceptZero = (value: unknown) => (value === 0 ? false : !value);
 //!!get bool value
-// object is not dict
-export const cleanObject = (object) => {
+// object is not dict, 并且 在一个函数里 改变传入对象是不好的
+export const cleanObject = (object: object) => {
   const result = { ...object };
   Object.keys(object).forEach((key) => {
+    // @ts-ignore
     const value = object[key];
-    if (isEmpty(value)) {
+    if (isEmptyExceptZero(value)) {
       // 排除value为空的情况 (value为0除外) 删掉kv
+      // @ts-ignore
       delete result[key];
     }
   });
   return result;
 };
 
-// // custom hook on top of useEffect: call callback when ComponentDidMount
-// // eslint regard prefix use as hook function
-// export const useMount = (callback) => {
-//   useEffect(() => {
-//     callback();
-//   }, []);
-// };
-// // useEffect when deps empty: call callback when comp mount & comp update
-// // deps not empty: call callback when state changed
+// custom hook on top of useEffect: call callback when ComponentDidMount
+// eslint regard prefix use as hook function
+export const useMount = (callback: ()=>void) => {
+  useEffect(() => {
+    callback();
+  }, []);
+};
+// useEffect when deps empty: call callback when comp mount & comp update
+// deps not empty: call callback when state changed
 
 // const debounce = (func, delay) => {
 //   let timeout;
@@ -60,7 +65,11 @@ export const cleanObject = (object) => {
 // 这个hook执行完毕
 // 如果一直有输入 则会一直更新外层param和这里的value 会不断设置timeout cancel timeout
 // 直到用户暂时不再输入 则设置debouncedValue state并返回
-export const useDebounce = (value, delay) => {
+// delay?: number 要么不传 要传就传number => number | undefined
+// ?? nullish coalescing operators
+// let random;  // if lefthandside is null or undefined then use righthand side default value
+// const color = random ?? 'red';
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
     // call callback after delay: set debouncedValue = value
