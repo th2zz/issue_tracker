@@ -22,9 +22,11 @@ export const cleanObject = (object: object) => {
 
 // custom hook on top of useEffect: call callback when ComponentDidMount
 // eslint regard prefix use as hook function
-export const useMount = (callback: ()=>void) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
+    // TODO 依赖项里加上callback会造成无限循环，这个和useCallback以及useMemo有关系
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 // useEffect when deps empty: call callback when comp mount & comp update
@@ -69,6 +71,7 @@ export const useMount = (callback: ()=>void) => {
 // ?? nullish coalescing operators
 // let random;  // if lefthandside is null or undefined then use righthand side default value
 // const color = random ?? 'red';
+// <V> 泛型占位符 这里声明的泛型变量 将于函数中出现的泛型对应
 export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
