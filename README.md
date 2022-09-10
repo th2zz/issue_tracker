@@ -5,6 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Project structure
 
 https://www.developerway.com/posts/react-project-structure
+https://www.youtube.com/watch?v=UUga4-z7b6s
 
 ## Available Scripts
 

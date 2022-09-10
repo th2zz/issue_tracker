@@ -23,7 +23,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "jsonserver": "json-server -w ./__json_server_mock__/db.json -d -p 7777 --middlewares ./__json_server_mock__/middleware.js",
-    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
