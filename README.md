@@ -2,9 +2,18 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Project structure
+
+https://www.developerway.com/posts/react-project-structure
+
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm run jsonserver`
+
+Starts the mock jsonserver at port 7777
+To modify middleware setup, checkout file `./__json_server_mock__/middleware.js`
 
 ### `npm start`
 
